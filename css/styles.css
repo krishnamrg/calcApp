@@ -1,0 +1,40 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans');
+
+body{
+	margin: auto;
+	background: -webkit-linear-gradient(360deg, whitesmoke , white);
+}
+header{
+	width: 800px;
+	font-size: 36px;
+	text-align: center;
+}
+footer{
+	width: 800px;
+	text-align: center;
+	clear: both;
+	bottom: 0px;
+}
+.wrapper{
+	margin: auto;
+	width: 800px;
+	overflow: auto;
+	color: black;
+	font-family: "Open Sans", sans-serif;
+}
+.calc-container{
+	border: 1px solid maroon;
+	box-shadow: 10px 10px 5px #888888;
+	width: 400px;
+	height: 500px;
+	text-align: center;
+	margin: auto;
+}
+.inner-container{
+	border: 1px solid maroon;
+	width: 380px;
+	height: 480px;
+	text-align: center;
+	margin: auto;	
+	margin-top: 10px;
+}
