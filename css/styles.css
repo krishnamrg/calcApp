@@ -38,3 +38,28 @@ footer{
 	margin: auto;	
 	margin-top: 10px;
 }
+#console{
+	background: #ccff99;
+	width: 350px;
+	height: 50px;
+	border: 1px solid gray;
+	margin: auto;
+	margin-top: 15px;
+	box-shadow: 2px 2px 2px #888888;
+}
+#key-pad{
+	border: 1px solid gray;
+	box-shadow: 2px 2px 2px #888888;
+	margin: auto;
+	margin-top: 10px;
+	width: 350px;
+	height: 385px;
+}
+.key{
+	width: 50px;
+	height: 50px;
+	white-space: normal;
+}
+.row{
+	margin:15px;
+}
