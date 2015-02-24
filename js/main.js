@@ -87,7 +87,7 @@ var calc = {
 		},
 
 	isOperator : function(str){
-		var isOp = (str == '*' || str == '-' || str == '+' || str == '/');
+		var isOp = (str == '*' || str == '-' || str == '+' || str == '/' || str == '%');
 		return isOp;
 	},
 
@@ -126,6 +126,9 @@ var calc = {
 				break;
 			case '/':
 				result = parseFloat(operand1) / parseFloat(operand2);
+				break;
+			case '%':
+				result = parseFloat(operand1) % parseFloat(operand2);
 				break;
 		}
 		return result;
