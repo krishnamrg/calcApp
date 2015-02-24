@@ -52,6 +52,8 @@ footer{
 	margin: auto;
 	margin-top: 15px;
 	box-shadow: 2px 2px 2px #888888;
+	text-align: right;
+	padding-right: 5px;
 }
 #key-pad{
 	border: 1px solid gray;

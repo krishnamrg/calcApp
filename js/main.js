@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 	var self = this;
 	calc.addEventListeners(event);
@@ -18,7 +16,9 @@ var calc = {
 					self.removeLastCharacterFromConsole();
 				}else{
 					var previousText = $('#console').html();
-					var consoleText = previousText != undefined ? previousText+=$(this).val() : $(this).val();
+					//not supporting square root functionality right now
+					var currKey = self.isSquareRoot($(this).val()) ? "" : $(this).val();
+					var consoleText = previousText != undefined ? previousText+=currKey : currKey;
 					$('#console').html(consoleText);	
 				}
 			}
@@ -47,6 +47,87 @@ var calc = {
 	},
 
 	computeAndDisplayResult : function(){
+		var self = this;
+		var expressionString = $('#console').html();
+		var expressionArray = this.getExpressionArray(expressionString);
+		var postfixExpressionArray = infixToPostfixRe(expressionArray, false);
+		console.log(postfixExpressionArray);
+		var result = self.computeResultFromPostFixExpressionArray(postfixExpressionArray);
+		console.log(result);
+		$('#console').html(result);
+	},
 
+	getCharCode : function(character){
+		return "&#" + character.charCodeAt(0)+";";
+	},
+
+	isSquareRoot : function(value){
+		var self = this;
+		return self.getCharCode(value)=="&#8730;";
+	},
+
+	getExpressionArray : function(expressionString){
+		var self = this;
+		var expressionArray = [];
+		var value = '';
+		for(i=0;i<expressionString.length;i++){
+				if(self.isOperator(expressionString[i])){
+					expressionArray.push(value);
+					expressionArray.push(expressionString[i]);
+					value = '';
+				}else{
+					value += expressionString[i];	
+				}
+				if(i == expressionString.length-1){
+					expressionArray.push(value);
+				}
+			}
+		return expressionArray;
+		},
+
+	isOperator : function(str){
+		var isOp = (str == '*' || str == '-' || str == '+' || str == '/');
+		return isOp;
+	},
+
+	computeResultFromPostFixExpressionArray : function(postfixExpressionArray){
+		var self = this;
+		var result = '';
+
+		var operand = '';
+		var operator = '';
+		for(var i = 0;i<postfixExpressionArray.length;i++){
+			if(self.isOperator(postfixExpressionArray[i])){
+				operator = postfixExpressionArray[i];
+				result = self.evaluateExpresssion(result, operand, operator);
+			}else{
+				if(i == 0){
+					result = postfixExpressionArray[i];
+				}else{
+					operand = postfixExpressionArray[i];	
+				}
+			}
+		}
+		return result;
+	},
+
+	evaluateExpresssion : function(operand1, operand2, operator){
+		var result = '';
+		switch(operator){
+			case '+':
+				result = operand1 + operand2;
+				break;
+			case '-':
+				result = operand1 - operand2;
+				break;
+			case '*':
+				result = operand1 * operand2;
+				break;
+			case '/':
+				result = operand1 / operand2;
+				break;
+		}
+		return result;
 	}
+
 };
