@@ -34,7 +34,8 @@ var calc = {
 	},
 
 	isBackSpacePressed : function(key){
-		return ($(key).val() == 'Back Space' ? true : false);
+		var self = this;
+		return self.getCharCode($(key).val())=="&#9003;";
 	},
 
 	removeLastCharacterFromConsole : function(key){
@@ -115,16 +116,16 @@ var calc = {
 		var result = '';
 		switch(operator){
 			case '+':
-				result = operand1 + operand2;
+				result = parseFloat(operand1) + parseFloat(operand2);
 				break;
 			case '-':
-				result = operand1 - operand2;
+				result = parseFloat(operand1) - parseFloat(operand2);
 				break;
 			case '*':
-				result = operand1 * operand2;
+				result = parseFloat(operand1) * parseFloat(operand2);
 				break;
 			case '/':
-				result = operand1 / operand2;
+				result = parseFloat(operand1) / parseFloat(operand2);
 				break;
 		}
 		return result;
