@@ -48,6 +48,7 @@ footer{
 	background: #ccff99;
 	width: 350px;
 	height: 50px;
+	line-height: 50px;
 	border: 1px solid gray;
 	margin: auto;
 	margin-top: 15px;
@@ -70,7 +71,18 @@ footer{
 	font-family: "Open Sans", sans-serif;
 	font-weight: bold;
 	margin-left: 2px;
+	border: 4px double yellowgreen;
 	margin-right: 2px;
+	background: white;
+	border-radius: 10px;
+	outline: none;
+	-moz-box-shadow: 1px 1px 0px 0px yellowgreen;
+	-webkit-box-shadow: 1px 1px 0px 0px yellowgreen;
+	box-shadow: 1px 1px 0px 0px yellowgreen;
+}
+.key:active {
+	position:relative;
+	top:2px;
 }
 .row{
 	margin:10px;
