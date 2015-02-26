@@ -3,7 +3,7 @@ $(document).ready(function(){
 	calc.addEventListeners(event);
 });
 
-var CONSOLE_DISPLAY_LENGTH = 35;
+var CONSOLE_DISPLAY_LENGTH = 30;
 
 var calc = {
 
