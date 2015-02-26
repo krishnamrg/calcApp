@@ -29,8 +29,8 @@ footer{
 .calc-container{
 	border: 1px solid #DE7;
 	box-shadow: 10px 10px 5px #888888;
-	width: 325px;
-	height: 350px;
+	width: 320px;
+	height: 345px;
 	text-align: center;
 	margin: auto;
 	background: darkgray;
@@ -52,6 +52,7 @@ footer{
 	height: 50px;
 	line-height: 50px;
 	border: 1px solid gray;
+	border-radius: 3px;
 	margin: auto;
 	margin-top: 15px;
 	box-shadow: 2px 2px 2px #888888;
@@ -63,8 +64,9 @@ footer{
 	box-shadow: 2px 2px 2px #888888;
 	margin: auto;
 	margin-top: 10px;
-	width: 275px;
+	width: 280px;
 	height: 235px;
+	border-radius: 3px;
 }
 .key{
 	width: 40px;
