@@ -3,7 +3,10 @@ $(document).ready(function(){
 	calc.addEventListeners(event);
 });
 
+var CONSOLE_DISPLAY_LENGTH = 35;
+
 var calc = {
+
 	addEventListeners : function(event){
 		var self = this;
 		$('.key').click(function(event){
@@ -16,10 +19,12 @@ var calc = {
 					self.removeLastCharacterFromConsole();
 				}else{
 					var previousText = $('#console').html();
-					//not supporting square root functionality right now
-					var currKey = self.isSquareRoot($(this).val()) ? "" : $(this).val();
-					var consoleText = previousText != undefined ? previousText+=currKey : currKey;
-					$('#console').html(consoleText);	
+					var consoleText = previousText != undefined ? previousText+=$(this).val() : $(this).val();
+					if(self.hasStringExceededConsoleDisplayLength(consoleText)){
+						self.showConsoleWarning();
+					}else{
+						$('#console').html(consoleText);	
+					}
 				}
 			}
 		});
@@ -50,12 +55,28 @@ var calc = {
 	computeAndDisplayResult : function(){
 		var self = this;
 		var expressionString = $('#console').html();
-		var expressionArray = this.getExpressionArray(expressionString);
-		var postfixExpressionArray = infixToPostfixRe(expressionArray, false);
-		console.log(postfixExpressionArray);
-		var result = self.computeResultFromPostFixExpressionArray(postfixExpressionArray);
-		console.log(result);
-		$('#console').html(result);
+		if(!self.hasStringExceededConsoleDisplayLength(expressionString)){
+			var expressionArray = this.getExpressionArray(expressionString);
+			var postfixExpressionArray = infixToPostfixRe(expressionArray, false);
+			console.log(postfixExpressionArray);
+			var result = self.computeResultFromPostFixExpressionArray(postfixExpressionArray);
+			console.log(result);
+			if(self.hasStringExceededConsoleDisplayLength(result)){
+					self.showConsoleWarning();
+			}else{
+				$('#console').html(result);	
+			}
+		}else{
+			self.showConsoleWarning();
+		}
+	},
+
+	showConsoleWarning : function(){
+		$('#console').html("Sorry! operation exceeds display length");
+	},
+
+	hasStringExceededConsoleDisplayLength : function(str){
+		return str.length > CONSOLE_DISPLAY_LENGTH;
 	},
 
 	getCharCode : function(character){
@@ -114,6 +135,7 @@ var calc = {
 
 	evaluateExpresssion : function(operand1, operand2, operator){
 		var result = '';
+		if(operand1.length )
 		switch(operator){
 			case '+':
 				result = parseFloat(operand1) + parseFloat(operand2);
@@ -131,7 +153,7 @@ var calc = {
 				result = parseFloat(operand1) % parseFloat(operand2);
 				break;
 		}
-		return result;
+		return result.toLocaleString();
 	}
 
 };
