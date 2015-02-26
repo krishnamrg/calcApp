@@ -58,6 +58,7 @@ footer{
 	box-shadow: 2px 2px 2px #888888;
 	text-align: right;
 	padding-right: 5px;
+	font-size: 14px;
 }
 #key-pad{
 	border: 1px solid gray;
@@ -69,7 +70,7 @@ footer{
 	border-radius: 3px;
 }
 .key{
-	width: 40px;
+	width: 44px;
 	height: 40px;
 	white-space: normal;
 	font-family: "Open Sans", sans-serif;
