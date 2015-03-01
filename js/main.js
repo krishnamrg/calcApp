@@ -4,6 +4,9 @@ $(document).ready(function(){
 });
 
 var CONSOLE_DISPLAY_LENGTH = 30;
+var INVALID_OPERATION ='Invalid Operation';
+var DIVIDE_BY_ZERO_ERROR = 'Divide by Zero error';
+var CONTINUE_MSG = 'Press C to Continue';
 
 var calc = {
 
@@ -20,16 +23,24 @@ var calc = {
 				}else{
 					var previousText = $('#console').html();
 					var consoleText = previousText != undefined ? previousText+=$(this).val() : $(this).val();
-					if(self.hasStringExceededConsoleDisplayLength(consoleText)){
-						self.showConsoleWarning();
+					if(self.isValidOperationString(previousText)){
+						if(self.hasStringExceededConsoleDisplayLength(consoleText)){
+							self.showConsoleWarning();
+						}else{
+							$('#console').html(consoleText);	
+						}
 					}else{
-						$('#console').html(consoleText);	
+						self.displayResetConsoleMsg();
 					}
 				}
 			}
 		});
 	},
 
+	displayResetConsoleMsg : function(){
+		$('#console').html(CONTINUE_MSG);
+	},
+	
 	isShowResult : function(key){
 		return ($(key).val() == '=' ? true : false);
 	},
@@ -44,12 +55,27 @@ var calc = {
 	},
 
 	removeLastCharacterFromConsole : function(key){
+		var self = this;
 		var cText = $('#console').html();
-		$('#console').html(cText.substring(0, cText.length-1));
+		if(self.isValidOperationString(cText)){
+			$('#console').html(cText.substring(0, cText.length-1));	
+		}else{
+			self.displayResetConsoleMsg();
+		}
 	},
 
 	clearConsole : function(){
 		$('#console').html("");
+	},
+
+	isValidOperationString : function(text){
+		if((text.search(INVALID_OPERATION) >= 0 || text.search(DIVIDE_BY_ZERO_ERROR) >= 0) || text.search(CONTINUE_MSG) >= 0){
+			return false;
+		}
+		return true;
+		//check with regular expression for numbers and operators instead of string compare.
+		//var pattern = ([-+]?[0-9]*\.?[0-9]+[\/\+\-\*])+([-+]?[0-9]*\.?[0-9]+);
+		//var n = text.search(pattern);
 	},
 
 	computeAndDisplayResult : function(){
@@ -133,25 +159,48 @@ var calc = {
 		return result;
 	},
 
-	evaluateExpresssion : function(operand1, operand2, operator){
+	isValidOperation : function(operand1, operand2, operator){
+		if(operator && operator.length){
+			if(operand1 && operand2){		
+				if(isFinite(operand1) && !isNaN(operand1) && isFinite(operand2) && !isNaN(operand2)){
+					return true;
+				}
+			}
+		}
+		return false;
+	},
+
+	performDivision : function(operand1, operand2){
 		var result = '';
-		if(operand1.length )
-		switch(operator){
-			case '+':
-				result = parseFloat(operand1) + parseFloat(operand2);
-				break;
-			case '-':
-				result = parseFloat(operand1) - parseFloat(operand2);
-				break;
-			case '*':
-				result = parseFloat(operand1) * parseFloat(operand2);
-				break;
-			case '/':
-				result = parseFloat(operand1) / parseFloat(operand2);
-				break;
-			case '%':
-				result = parseFloat(operand1) % parseFloat(operand2);
-				break;
+		if(operand2 == 0){
+			result = DIVIDE_BY_ZERO_ERROR;
+		}else{
+			result = operand1 / operand2;
+		}
+		return result;
+	},
+
+	evaluateExpresssion : function(operand1, operand2, operator){
+		var self = this;
+		var result = INVALID_OPERATION;
+		if(self.isValidOperation(operand1, operand2, operator)){
+			switch(operator){
+				case '+':
+					result = parseFloat(operand1) + parseFloat(operand2);
+					break;
+				case '-':
+					result = parseFloat(operand1) - parseFloat(operand2);
+					break;
+				case '*':
+					result = parseFloat(operand1) * parseFloat(operand2);
+					break;
+				case '/':
+					result = self.performDivision(parseFloat(operand1), parseFloat(operand2));
+					break;
+				case '%':
+					result = parseFloat(operand1) % parseFloat(operand2);
+					break;
+			}
 		}
 		return result.toLocaleString();
 	}
