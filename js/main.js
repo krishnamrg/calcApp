@@ -23,6 +23,7 @@ var calc = {
 				}else{
 					var previousText = $('#console').html();
 					var consoleText = previousText != undefined ? previousText+=$(this).val() : $(this).val();
+					consoleText = consoleText.replace(new RegExp(',', 'g'), '');
 					if(self.isValidOperationString(previousText)){
 						if(self.hasStringExceededConsoleDisplayLength(consoleText)){
 							self.showConsoleWarning();
